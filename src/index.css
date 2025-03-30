@@ -1,0 +1,208 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100..900&family=Rubik+Bubbles&display=swap');
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: "Roboto Slab", serif;
+}
+
+button {
+  border: none;
+  outline: none;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+body {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #2b2d42, #414558);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.App {
+  width: 100%;
+  max-width: 720px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.calculator {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+}
+
+.Window {
+  background: rgba(0, 0, 0, 0.2);
+  padding: 1.5rem;
+  min-height: 120px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: flex-end;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.Window .expression {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 1.2rem;
+  width: 100%;
+  text-align: right;
+  overflow-x: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+}
+
+.Window .result {
+  color: #ffffff;
+  font-size: 2.5rem;
+  font-weight: 500;
+}
+
+.KeyWindow {
+  padding: 1rem;
+  display: flex;
+  gap: 1rem;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.KeyWindow button {
+  padding: 1rem;
+  font-size: 1.2rem;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.05);
+  color: #ffffff;
+}
+
+.KeyWindow button:hover {
+  background: rgba(255, 255, 255, 0.15);
+  transform: translateY(-2px);
+}
+
+.KeyWindow button:active {
+  transform: translateY(0);
+}
+
+.keyScientific {
+  width: 35%;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.5rem;
+}
+
+.line {
+  width: 1px;
+  background: rgba(255, 255, 255, 0.15);
+  margin: 0.5rem 0;
+}
+
+.keyBasic {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0.5rem;
+}
+
+.keyBasic button {
+  width: 60px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.keyBasic .equal {
+  background: #ef476f;
+  color: #ffffff;
+}
+
+.keyBasic .equal:hover {
+  background: #ff5a82;
+}
+
+.keyBasic .number,
+.keyBasic .dot,
+.keyBasic .del {
+  background: rgba(255, 255, 255, 0.08);
+  font-weight: 500;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .calculator {
+    margin: 0 1rem;
+  }
+  
+  .Window .result {
+    font-size: 2rem;
+  }
+  
+  .KeyWindow {
+    gap: 0.75rem;
+  }
+  
+  .KeyWindow button {
+    padding: 0.8rem;
+    font-size: 1.1rem;
+  }
+  
+  .keyBasic button {
+    width: 50px;
+    height: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .KeyWindow {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .line {
+    display: none;
+  }
+  
+  .keyScientific {
+    width: 100%;
+    grid-template-columns: repeat(5, 1fr);
+    order: 2;
+  }
+  
+  .keyBasic {
+    order: 1;
+  }
+  
+  .Window {
+    padding: 1rem;
+    min-height: 100px;
+  }
+  
+  .Window .result {
+    font-size: 1.8rem;
+  }
+  
+  .Window .expression {
+    font-size: 1rem;
+  }
+  
+  .KeyWindow button {
+    padding: 0.7rem;
+    font-size: 1rem;
+  }
+  
+  .keyBasic button {
+    width: 45px;
+    height: 45px;
+  }
+}

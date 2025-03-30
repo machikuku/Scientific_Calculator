@@ -1,0 +1,112 @@
+import React, { useState } from 'react';
+import Window from "./Window";
+import KeyWindow from "./KeyWindow";
+
+
+const Calculator = () => {
+
+    const[expression, setExpression] = useState("");
+    const[disexp, setDisexp] = useState("");
+    const[result, setResult] = useState("0");
+
+    const scifun = {
+        sin:"Math.sin",
+        cos:"Math.cos",
+        tan:"Math.tan",
+        cot: "(x => 1/Math.tan(x))",
+        sec: "(x => 1/Math.cos(x))",
+        csc: "(x => 1/Math.sin(x))",
+        ln:"Math.log",
+        log:"Math.log10",
+        π:"Math.PI",
+        e:"Math.E",
+        "^":"**",
+        "√":"Math.sqrt",
+        "%": "/100",
+    }
+    function CalRes(){
+        if (expression.length !== 0){
+            try{
+                let total = eval(expression);
+                total = parseFloat(total.toFixed(4))
+                setResult (total);
+            } catch(error){
+                setResult("Error!");
+            }   
+        }
+        else{
+            setResult("Error!");
+        }
+    }
+
+
+    let deleteCount = 0;
+    let deleteTimeout;
+    
+    function deleteCharacters(count) {
+    setDisexp(disexp.slice(0, -count));
+    setExpression(expression.slice(0, -count));
+    }
+
+    function handleButton(value) {
+        if(value === "AC") {
+            setExpression("");
+            setDisexp("");
+            setResult("");
+            deleteCount = 0;
+        }
+        else if (value === "DEL"){
+            deleteCount++;
+            deleteCharacters(deleteCount);
+            clearTimeout(deleteTimeout);
+            deleteTimeout = setTimeout(() => deleteCount = 0, 500);
+        }
+        else if(scifun.hasOwnProperty(value)){
+            setDisexp(disexp + value);
+            setExpression(expression + scifun[value]);
+        }
+        else if (value === "%") {
+            const lastNum = extractLastNum(expression);
+            if (lastNum !== null) {
+                setDisexp(disexp + value);
+                setExpression(expression.replace(lastNum, `(${lastNum}/100)`));
+            }
+        }
+        else if (value === "!"){
+            const lastNum = extractLastNum(expression);
+            if(lastNum != null){
+                const num = parseFloat(lastNum);
+                setDisexp(disexp + value);
+                setExpression(expression.replace(lastNum,factorial(num)));
+            }
+        }
+        else if (value === '=') CalRes();
+        
+        else{
+            setExpression(expression + value);
+            setDisexp(disexp + value);
+        }
+    }
+    function factorial(n){
+        let result = 1;
+        for (let i = 1 ; i <= n ; i++)
+            result *= i;
+        return result;
+    }
+
+    function extractLastNum(exp){
+        const numbers = exp.match(/\d+/g);
+        return numbers ? numbers [numbers.length -1]:
+        null;
+
+    }
+
+    return (
+        <div className='calculator'>
+            <Window expression = {disexp} result = {result} />
+            <KeyWindow handleButton = {handleButton}/>
+        </div>
+    )
+}
+
+export default Calculator
